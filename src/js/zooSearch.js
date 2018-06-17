@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Card from './card';
-import myData from './gamesext.json';
 
+const API = "http://starlord.hackerearth.com/gamesext";
 
 class ZooSearch extends React.Component {
 
@@ -12,19 +12,37 @@ class ZooSearch extends React.Component {
         sortDir:" -- ",
         text:"Back",
         searchText:"",
-        searchResult:myData,
-        gamedata:myData,
+        searchResult:"myData",
+        gamedata:"myData",
+        olddata:"myData",
         color:['#fcd000', '#0ebeff', '#47cf73', '#ae63e4']
       };
-      this.olddata = JSON.parse(JSON.stringify(myData));
+    }
+
+  componentDidMount()
+  {
+    fetch(API)
+    .then((response) => response.json())
+    .then((findresponse)=>{
+      console.log(findresponse)
+      this.setState({
+        gamedata:findresponse,
+        searchResult:findresponse,
+        olddata:JSON.parse(JSON.stringify(findresponse))
+      })
+    })
   }
+      
+  
   handleSort(){
     var bar = ReactDOM.findDOMNode(this.refs.sortBar);
     var word = bar.value;
     var result = [];
     var i = 0;
     var allgamedata = this.state.gamedata;
-    console.log(word);
+    // console.log(word);
+    // console.log(allgamedata);
+    // console.log(this.state.olddata);
     if(word ==="Ascending"){
       var ascdata = allgamedata.sort((a, b) => (a.score - b.score));
       for(i=0; i<ascdata.length; i++){
@@ -40,8 +58,8 @@ class ZooSearch extends React.Component {
     else
     {
       // console.log("None");
-      for(i=0; i<this.olddata.length; i++){
-        result.push(this.olddata[i]);
+      for(i=0; i<this.state.olddata.length; i++){
+        result.push(this.state.olddata[i]);
       }
     }
     this.setState({searchResult:result});
