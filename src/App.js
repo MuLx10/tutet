@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import ZooModal from './js/zooModal';
+import ZooSearch from './js/zooSearch';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/style.css';
 
@@ -11,7 +11,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="zoo-modal-text">Load From Zoo</h1> 
         </header>
-        <ZooModal></ZooModal>
+        <ZooSearch></ZooSearch>
       </div>
     );
   }
